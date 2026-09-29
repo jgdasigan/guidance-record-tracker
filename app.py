@@ -3,6 +3,7 @@
 # with it. Counselor login and student records stay in the browser, under
 # Supabase row-level security, so this file has no database password.
 from pathlib import Path
+from urllib.parse import urlsplit
 import shutil
 
 import streamlit as st
@@ -69,6 +70,14 @@ st.markdown(
 )
 
 
+def frontend_src() -> str:
+    page = st.context.url or ""
+    path = urlsplit(page).path if page else ""
+    if path and not path.endswith("/"):
+        path += "/"
+    return f"{path}app/static/index.html"
+
+
 def publish_frontend() -> bool:
     if not BUILT_PAGE.is_file():
         return False
@@ -89,5 +98,9 @@ if not publish_frontend():
 
 # A real page on this origin can keep the Supabase session. An inline HTML
 # frame cannot, because that frame has no stable origin for storage.
-# server.enableStaticServing must stay on so this path is actually served.
-st.iframe("/app/static/index.html", height="stretch")
+# The static folder has to exist when the server starts. Creating it here is
+# too late for that check, so static/index.html is committed with the repo.
+# The iframe path has to stay under the page the browser actually opened.
+# A root path of /app/static/index.html skips Community Cloud's /~/+/ prefix
+# and comes back as this same shell, so the frame loads forever.
+st.iframe(frontend_src(), height="stretch")
