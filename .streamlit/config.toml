@@ -1,0 +1,17 @@
+[server]
+# The React build is one HTML file in static/. Streamlit does not serve that
+# folder unless this is on.
+enableStaticServing = true
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#1f6b45"
+backgroundColor = "#f3efe6"
+secondaryBackgroundColor = "#fffdf8"
+textColor = "#1e1a16"
