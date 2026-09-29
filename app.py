@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parent
 BUILT_PAGE = ROOT / "frontend" / "dist" / "index.html"
 PUBLISHED_PAGE = ROOT / "static" / "index.html"
 
-st.set_page_config(page_title="Guidance records", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Guidance Student Records", layout="wide", initial_sidebar_state="collapsed")
 
 # The component iframe is a fixed-height box. These rules remove Streamlit's
 # own header and stretch that one frame to the window.

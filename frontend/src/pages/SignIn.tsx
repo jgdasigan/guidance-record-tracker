@@ -7,7 +7,7 @@ export function SetupScreen() {
   return (
     <div className="gate">
       <section className="gate-card">
-        <p className="eyebrow">Guidance records</p>
+        <p className="eyebrow">Guidance Records</p>
         <h1>Connect this build to Supabase</h1>
         <p>
           Copy <code>frontend/.env.example</code> to <code>frontend/.env</code>,
@@ -42,7 +42,7 @@ export function SignIn() {
   return (
     <div className="gate">
       <section className="gate-card">
-        <p className="eyebrow">Guidance records</p>
+        <p className="eyebrow">Guidance Records</p>
         <h1>Sign in</h1>
         {/* <p>Counselors and administrators only. Student notes stay on this side of the login.</p> */}
         <form onSubmit={(event) => void onSubmit(event)}>
