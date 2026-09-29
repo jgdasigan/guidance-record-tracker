@@ -71,11 +71,14 @@ st.markdown(
 
 
 def frontend_src() -> str:
+    # Community Cloud only forwards app traffic under /~/+/. A request to
+    # /app/static/index.html hits the hosting shell, which is another copy of
+    # this page, so the frame never reaches the React build.
     page = st.context.url or ""
-    path = urlsplit(page).path if page else ""
-    if path and not path.endswith("/"):
-        path += "/"
-    return f"{path}app/static/index.html"
+    host = (urlsplit(page).hostname or "").lower()
+    if host.endswith(".streamlit.app"):
+        return "/~/+/app/static/index.html"
+    return "/app/static/index.html"
 
 
 def publish_frontend() -> bool:
@@ -100,7 +103,5 @@ if not publish_frontend():
 # frame cannot, because that frame has no stable origin for storage.
 # The static folder has to exist when the server starts. Creating it here is
 # too late for that check, so static/index.html is committed with the repo.
-# The iframe path has to stay under the page the browser actually opened.
-# A root path of /app/static/index.html skips Community Cloud's /~/+/ prefix
-# and comes back as this same shell, so the frame loads forever.
+# On Community Cloud the iframe must use /~/+/app/static/index.html.
 st.iframe(frontend_src(), height="stretch")
